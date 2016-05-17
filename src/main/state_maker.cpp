@@ -52,23 +52,17 @@ int main()
 	copy(state1a,I);
 	copy(state1b,I);
 
-	char t;
+	int x;
 
-	while(cin>>t)
+	while(cin>>x)
 	{
-		if(t=='o')
+		if(x==99)
 			break;
-		int x;
-		switch(t)
+		if(x%4==3)
 		{
-			case '0' :	x=0;	break;
-			case '1' :	x=1;	break;
-			case '2' :	x=2;	break;
-			case '3' :	x=3;	break;
-			case '4' :	x=4;	break;
-			case '5' :	x=5;	break;
+			cerr<<"illigal turn"<<endl;
+			break;
 		}
-
 		turn(state1a, a[x], state2a );
 		turn(state1b, b[x], state2b );
 
@@ -80,4 +74,5 @@ int main()
 
 
     return 0;
+    
 }

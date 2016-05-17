@@ -56,32 +56,7 @@ class SatSolver
          lits.push(~la); lits.push(~lb); lits.push(lf);
          _solver->addClause(lits); lits.clear();
       }
-/*
-      void addAndCNF(Var vf, Var va, bool fa, Var vb, bool fb, Var vc , bool fc, Var vd, bool fd )
-      {
-         vec<Lit> lits;
-         Lit lf = Lit(vf);
-         Lit la = fa? Lit(va): ~Lit(va);
-         Lit lb = fb? Lit(vb): ~Lit(vb);
-         Lit lc = fc? Lit(vc): ~Lit(vc);
-         Lit ld = fd? Lit(vd): ~Lit(vd);
 
-         lits.push(la); lits.push(~lf);
-         _solver->addClause(lits); lits.clear();
-         
-         lits.push(lb); lits.push(~lf);
-         _solver->addClause(lits); lits.clear();
-
-         lits.push(lc); lits.push(~lf);
-         _solver->addClause(lits); lits.clear();
-
-          lits.push(ld); lits.push(~lf);
-         _solver->addClause(lits); lits.clear();
-
-         lits.push(~la); lits.push(~lb); lits.push(~lc); lits.push(~ld); lits.push(lf);
-         _solver->addClause(lits); lits.clear();
-      }
-*/
       void addAndCNF(Var vo, vector<Var> vi, vector<bool> bi )
       {  
          assert(!vi.empty());
@@ -115,38 +90,40 @@ class SatSolver
          _solver->addClause(lits); lits.clear();
       }
 
-      void addOrCNF(Var vf, Var va, Var vb, Var vc, Var vd, Var ve, Var vg )
+      void addsp1( Var va , Var vb, Var vc)
       {
          vec<Lit> lits;
-         Lit lf = Lit(vf);
          Lit la = Lit(va);
          Lit lb = Lit(vb);
          Lit lc = Lit(vc);
-         Lit ld = Lit(vd);
-         Lit le = Lit(ve);
-         Lit lg = Lit(vg);
-         
-         lits.push(~la); lits.push( lf);
-         _solver->addClause(lits); lits.clear();
-         
-         lits.push(~lb); lits.push( lf);
-         _solver->addClause(lits); lits.clear();
-         
-         lits.push(~lc); lits.push( lf);
-         _solver->addClause(lits); lits.clear();
 
-         lits.push(~ld); lits.push( lf);
-         _solver->addClause(lits); lits.clear();
-
-         lits.push(~le); lits.push( lf);
-         _solver->addClause(lits); lits.clear();
-
-         lits.push(~lg); lits.push( lf);
-         _solver->addClause(lits); lits.clear();
-
-         lits.push( la); lits.push( lb); lits.push( lc); lits.push( ld); lits.push( le); lits.push( lg); lits.push(~lf);
+         lits.push(la); lits.push(lb); lits.push(lc);
          _solver->addClause(lits); lits.clear();
       }
+    
+      void addOrCNF(Var vo, vector<Var> vi )
+      {
+      	assert(!vi.empty());
+
+      	int size=vi.size();
+      	vec<Lit> lits;
+
+      	Lit lo = Lit(vo);
+
+      	Lit li[size];
+      	for(int i =0;i<size;i++)
+      	{
+      		li[i] = Lit(vi[i]);
+      		lits.push(~li[i]); lits.push(lo);
+      		_solver->addClause(lits); lits.clear();
+      	}
+
+      	for(int i =0;i<size;i++)
+      		lits.push(li[i]);
+      	lits.push(~lo);
+      	_solver->addClause(lits); lits.clear();
+      }
+
 
       void addConst1CNF(Var va)
       {
