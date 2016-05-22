@@ -143,6 +143,18 @@ void turns_init(Var* Turns , int x)
          solver.addXorCNF(tempxor[1], Turns[5*y+1], false, Turns[5*(y-1)+1], false);
          solver.addXorCNF(tempxor[2], Turns[5*y+2], false, Turns[5*(y-1)+2], false);
          solver.addsp1(tempxor[0],tempxor[1],tempxor[2]);
+         
+         if(y!=1)
+         {
+            Var tempxor1[4]={};
+            tempxor1[0]=solver.newVar();tempxor1[1]=solver.newVar();tempxor1[2]=solver.newVar();tempxor1[3]=solver.newVar();
+            solver.addXorCNF(tempxor1[0], Turns[5*y+0], false, Turns[5*(y-2)+0], false);
+            solver.addXorCNF(tempxor1[1], Turns[5*y+1], false, Turns[5*(y-2)+1], false);
+            solver.addXorCNF(tempxor1[2], Turns[5*(y-1)+0], false, Turns[5*(y-2)+0], false);
+            solver.addXorCNF(tempxor1[3], Turns[5*(y-1)+1], false, Turns[5*(y-2)+1], false);
+            solver.addsp2(tempxor1[0],tempxor1[1],tempxor1[2],tempxor1[3],tempxor[0],tempxor[1]);
+         }
+
       }
    }
 

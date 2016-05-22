@@ -100,6 +100,20 @@ class SatSolver
          lits.push(la); lits.push(lb); lits.push(lc);
          _solver->addClause(lits); lits.clear();
       }
+
+      void addsp2( Var va ,Var vb, Var vc, Var vd, Var ve, Var vf)
+      {
+         vec<Lit> lits;
+         Lit la = Lit(va);
+         Lit lb = Lit(vb);
+         Lit lc = Lit(vc);
+         Lit ld = Lit(vd);
+         Lit le = Lit(ve);
+         Lit lf = Lit(vf);
+
+         lits.push(la); lits.push(lb); lits.push(lc);lits.push(ld); lits.push(le); lits.push(lf);
+         _solver->addClause(lits); lits.clear();
+      }
     
       void addOrCNF(Var vo, vector<Var> vi )
       {
